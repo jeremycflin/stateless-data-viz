@@ -1,144 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-    <style>
-    .container{
-    width: 80%; 
-    max-width: 850px; 
-    margin: 30px auto 10px auto; 
-    }
 
-    .title1{
-    font-family:"Libre Baskerville";
-    font-size:37px;
-    color:steelblue;
-    }
-
-    .title2{
-    font-family:'Crimson Text';
-    font-size:18px;
-    line-height: 0.9em;
-    opacity:0.7;
-    }
-
-    h3{
-    font-family:'Crimson Text';
-    font-size:15px;
-    opacity: 0.7;
-    margin-top: -10px;
-    margin-bottom: -20px;
-    }
-    #dataViz{
-      max-width: 1200px; 
-      width: 90%; 
-      margin: 30px auto 20px auto; 
-    }
-
-/*    body{
-      background-color: #f9f9f9; 
-    }*/
-
-    /* Tooltip CSS */
-    .d3-tip {
-    line-height: 1.5;
-    font-weight: 400;
-    font-family:"avenir next", Arial, sans-serif;
-    padding: 6px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #FFA500;
-    border-radius: 1px;
-    pointer-events: none;
-    }
-
-    /* Creates a small triangle extender for the tooltip */
-    .d3-tip:after {      
-      box-sizing: border-box;
-      display: inline;
-      font-size: 8px;
-      width: 100%;
-      line-height: 1.5;
-      color: rgba(0, 0, 0, 0.6);
-      position: absolute;
-      pointer-events: none;
-      
-    }
-
-    /* Northward tooltips */
-    .d3-tip.n:after {
-      content: "\25BC";
-      margin: -1px 0 0 0;
-      top: 100%;
-      left: 0;
-      text-align: center;
-    }
-
-    /* Eastward tooltips */
-    .d3-tip.e:after {
-      content: "\25C0";
-      margin: -4px 0 0 0;
-      top: 50%;
-      left: -8px;
-    }
-
-    /* Southward tooltips */
-    .d3-tip.s:after {
-      content: "\25B2";
-      margin: 0 0 1px 0;
-      top: -8px;
-      left: 0;
-      text-align: center;
-    }
-
-    /* Westward tooltips */
-    .d3-tip.w:after {
-      content: "\25B6";
-      margin: -4px 0 0 -1px;
-      top: 50%;
-      left: 100%;
-    }
-
-/*    text{
-      pointer-events:none;
-    }*/
-
-    .circle:hover{
-      stroke: rgb(0, 0, 0); 
-      stroke-width: 1px;
-    }
-
-    .details{
-      color: white;
-      /*font-weight: 600;*/
-    }
-
-    .legendCircle{
-    	fill:rgba(255,255,255,0.6);
-        stroke:black;
-        stroke-width:1.5;
-        stroke-dasharray:5,5;
-
-    }
-
-    .legendText{
-    	font-family:"avenir next", Arial, sans-serif;
-    	font-size: 12px;
-    }
-    </style>
-    <link href='http://fonts.googleapis.com/css?family=Crimson+Text:400,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
-  </head>
-<body>
-<div class="container">
-<h1 class="title1">Nowhere Land: Worldwide Stateless Population by Country</h1>
-<h2 class="title2">Living at the margins of society, the worldwide population of stateless people is estimated to be around 10 million according to the United Nations High Commission on Refugees. The data includes estimated statistics on the Dominican Republic, India and Indonesia. In recent years the number of stateless people has decreased in countries such as Iraq and the Russian Federation.</h2>
-<h3>Produced by Jeremy C.F. Lin</h3>
-</div>
-<div id="dataViz"></div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v1.min.js"></script>
-<script src="d3-tip.js"></script>
-<script>
 
 // Set tooltips
 var tip = d3.tip()
@@ -151,12 +11,12 @@ var tip = d3.tip()
 
 // Set margin, with and height
 var margin = {top: 20, right: 20, bottom: 30, left: 30},
-            width = 1200 - margin.left - margin.right,
-            height = 800 - margin.top - margin.bottom;  
+            width = 1000 - margin.left - margin.right,
+            height = 600 - margin.top - margin.bottom;  
 
 // Set projection 
 var projection = d3.geo.mercator()
-                   .scale(200)
+                   .scale(150)
                    .translate( [width / 2, height / 1.5]);
 
 // Set path
@@ -164,7 +24,7 @@ var path = d3.geo.path().projection(projection);
 
 
 // Setsvg and then give it a class called map
-var svg = d3.select("#dataViz")
+var svg = d3.select("#stateless")
             .append("svg")
             .attr("width", width)
             .attr("height", height)
@@ -598,15 +458,15 @@ d3.json("world_countries.json", function(data){
           return i * 20;
         })
         .attr("r",function(d){
-          if( +d.value > 700000){ return 45 }
-            else if( +d.value > 500000){return 40}
-            else if( +d.value > 100000){ return 35}
-            else if (+d.value > 50000){return 30}
-            else if (+d.value > 10000){return 25}  
-            else if (+d.value > 5000){return 20}
-            else if (+d.value > 1000){return 15}
-            else if (+d.value > 500){return 10}        
-            else{ return 5 };
+          if( +d.value > 700000){ return 40 }
+            else if( +d.value > 500000){return 35}
+            else if( +d.value > 100000){ return 30}
+            else if (+d.value > 50000){return 25}
+            else if (+d.value > 10000){return 20}  
+            else if (+d.value > 5000){return 15}
+            else if (+d.value > 1000){return 10}
+            else if (+d.value > 500){return 5}        
+            else{ return 3 };
 
         })
         });
@@ -616,28 +476,28 @@ d3.json("world_countries.json", function(data){
           .append("circle")
           .attr("cx",width/12)
           .attr("cy",(height - height/3))
-          .attr("r",40)
+          .attr("r",35)
           .attr('class', 'legendCircle');
 
         d3.select("svg") 
           .append("circle")
           .attr("cx",width/12)
-          .attr("cy",(height - height/4.3))
-          .attr("r",30)
+          .attr("cy",(height - height/4.6))
+          .attr("r",25)
           .attr('class', 'legendCircle');
 
           d3.select("svg") 
           .append("circle")
           .attr("cx",width/12)
-          .attr("cy",(height - height/6.3))
-          .attr("r",20)
+          .attr("cy",(height - height/7.3))
+          .attr("r",15)
           .attr('class', 'legendCircle');
 
           d3.select("svg") 
           .append("circle")
           .attr("cx",width/12)
-          .attr("cy",(height - height/8.9))
-          .attr("r",10)
+          .attr("cy",(height - height/10.5))
+          .attr("r",5)
           .attr('class', 'legendCircle');
 
         d3.select("svg") 
@@ -661,7 +521,7 @@ d3.json("world_countries.json", function(data){
         d3.select("svg") 
           .append("text")
           .attr("x",width/28)
-          .attr("y",(height - height/2.5))
+          .attr("y",(height - height/2.3))
           .text("Stateless Population")
           .style("font-family","avenir next")
           .style("font-size","15")
@@ -669,32 +529,28 @@ d3.json("world_countries.json", function(data){
 
         d3.select("svg") 
           .append("text")
-          .attr("x",width/8)
-          .attr("y",(height - height/3.1))
+          .attr("x",width/7.5)
+          .attr("y",(height - height/3.2))
           .text("More than 500000")
           .attr("class","legendText");
 
         d3.select("svg") 
           .append("text")
-          .attr("x",width/8)
-          .attr("y",(height - height/4.5))
+          .attr("x",width/7.5)
+          .attr("y",(height - height/4.7))
           .text("50000")
           .attr("class","legendText");
 
         d3.select("svg") 
           .append("text")
-          .attr("x",width/8)
-          .attr("y",(height - height/6.5))
+          .attr("x",width/7.5)
+          .attr("y",(height - height/7.5))
           .text("5000")
           .attr("class","legendText");
 
          d3.select("svg") 
           .append("text")
-          .attr("x",width/8)
-          .attr("y",(height - height/9.5))
+          .attr("x",width/7.5)
+          .attr("y",(height - height/11))
           .text("Less than 500")
           .attr("class","legendText");
-</script>
-
-</body>
-</html>
